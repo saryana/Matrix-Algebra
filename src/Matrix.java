@@ -13,6 +13,7 @@ public class Matrix {
 	 * Constructs a matrix
 	 * @param rows - number of rows in matrix
 	 * @param cols - number of columns in matrix
+	 * @throws IllegalArgumentException if the rows or columns are zero
 	 */
 	public Matrix(int rows, int columns) {
 		if (rows == 0 || columns == 0) throw new IllegalArgumentException();
@@ -91,6 +92,50 @@ public class Matrix {
 				matrix[row][col] *= scalar; 
 			}
 		}
+	}
+	
+	/**
+	 * Multiplies matrix by scalar
+	 * @param scalar - number that the matrix is going to grow by
+	 */
+	public void scalarMultiplcation(Matrix otherMatrix) {
+		if (otherMatrix.getRows() != this.getColumns()
+				&& otherMatrix.getColumns() != this.getRows()) {
+			throw new IllegalArgumentException();
+		}
+		for (int row = 0; row < this.getRows(); row++) {
+			for (int col = 0; col < this.getColumns(); col++) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * Multiplies two matrices if they have correct rows and columns
+	 * @param other - matrix multiply current one by
+	 * @return product of matrices
+	 */
+	public Matrix multiply(Matrix other) {
+		if (this.getRows() != other.getColumns()
+				|| this.getColumns() != other.getRows()) {
+			throw new IllegalArgumentException();
+		}
+		Matrix product = new Matrix(this.getRows(), other.getColumns());
+		
+		for (int i = 0; i < this.getRows(); i++) {
+			for (int j = 0; j < this.getRows(); j++) {
+				int sum = 0;
+
+				for (int k = 0; k < this.getColumns(); k++) {
+					int o = matrix[i][k];
+					int o2 = other.matrix[k][i];
+					sum += o * o2;
+				}
+				product.matrix[i][j] = sum;
+			}
+		}
+		System.out.println(product.toString());
+		return product;
 	}
 	
 	/**
