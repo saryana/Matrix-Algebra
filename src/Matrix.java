@@ -116,19 +116,18 @@ public class Matrix {
 	 * @return product of matrices
 	 */
 	public Matrix multiply(Matrix other) {
-		if (this.getRows() != other.getColumns()
-				|| this.getColumns() != other.getRows()) {
+		if (this.getColumns() != other.getRows()) {
 			throw new IllegalArgumentException();
 		}
 		Matrix product = new Matrix(this.getRows(), other.getColumns());
 		
-		for (int i = 0; i < this.getRows(); i++) {
-			for (int j = 0; j < this.getRows(); j++) {
+		for (int i = 0; i < this.getColumns(); i++) {
+			for (int j = 0; j < other.getColumns(); j++) {
 				int sum = 0;
 
 				for (int k = 0; k < this.getColumns(); k++) {
 					int o = matrix[i][k];
-					int o2 = other.matrix[k][i];
+					int o2 = other.matrix[k][j];
 					sum += o * o2;
 				}
 				product.matrix[i][j] = sum;
@@ -136,6 +135,32 @@ public class Matrix {
 		}
 		System.out.println(product.toString());
 		return product;
+	}
+	
+	/**
+	 * Raises matrix to certain power
+	 * @param power - power being raised to
+	 * @param ma
+	 */
+	public void power(int power, Matrix ma) {
+		Matrix result = ma;
+		for (int i = 0; i < power-1; i++) {
+			result = multiply(result);
+		}
+		System.out.println(result.toString());
+	}
+	
+	/**
+	 * Transposes a matrix only if it is a square matrix
+	 */
+	public void transpose() {
+		Matrix n = new Matrix(this.getColumns(), this.getRows());
+		for (int row = 0; row < this.getRows(); row++) {
+			for (int col = 0; col < this.getColumns(); col++){
+				n.matrix[col][row] = matrix[row][col];
+			}
+		}
+		this.matrix = n.matrix;
 	}
 	
 	/**

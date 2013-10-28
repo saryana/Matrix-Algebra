@@ -38,9 +38,14 @@ public class MatrixCalculator {
 			} else if (request.equals("multiply")) {
 				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
 				selected.multiply(matrices[console.nextInt() - 1]);
+			} else if (request.equals("pow")) {
+				System.out.print("By what power? ");
+				selected.power(console.nextInt(), selected);
 			} else if (request.equals("sm")) {
 				System.out.print("By what scalar? ");
 				selected.scalarMultiplcation(console.nextInt());
+			} else if (request.equals("trans")) {
+				selected.transpose();
 			} else if (request.equals("rows")) {
 				System.out.println(selected.getRows());
 			} else if (request.equals("cols")) {
@@ -91,7 +96,9 @@ public class MatrixCalculator {
 		commands.add("FILL: Fill Matrix");
 		commands.add("ADD: Add Matrix");
 		commands.add("MULTIPLY: Multiply a matrix");
+		commands.add("POW: Raises matrix to certain power");
 		commands.add("SM: Scalar Multiply");
+		commands.add("TRAN: Transposes");
 		commands.add("ROWS: Get Rows");
 		commands.add("COLS: Get Columns");
 		commands.add("CS: Change Selected");
