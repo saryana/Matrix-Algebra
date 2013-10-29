@@ -69,17 +69,20 @@ public class Matrix {
 	 * Adds and stores values in matrix
 	 * @param otherMatrix - matrix being added to
 	 */
-	public void add(Matrix otherMatrix) {
+	public Matrix add(Matrix otherMatrix) {
 		if (otherMatrix.getRows() != this.getRows()
 				|| otherMatrix.getColumns() != this.getColumns()) {
 			throw new IllegalArgumentException();
 		}
+		Matrix sum = new Matrix(this.getRows(), this.getColumns());
 		
 		for (int row = 0; row < this.getRows(); row++) {
 			for (int col = 0; col < this.getColumns(); col++) {
-				matrix[row][col] += otherMatrix.matrix[row][col];
+				sum.matrix[row][col] = matrix[row][col] + otherMatrix.matrix[row][col];
 			}
 		}
+		
+		return sum;
 	}
 	
 	/**
@@ -90,22 +93,6 @@ public class Matrix {
 		for (int row = 0; row < this.getRows(); row++) {
 			for (int col = 0; col < this.getColumns(); col++) {
 				matrix[row][col] *= scalar; 
-			}
-		}
-	}
-	
-	/**
-	 * Multiplies matrix by scalar
-	 * @param scalar - number that the matrix is going to grow by
-	 */
-	public void scalarMultiplcation(Matrix otherMatrix) {
-		if (otherMatrix.getRows() != this.getColumns()
-				&& otherMatrix.getColumns() != this.getRows()) {
-			throw new IllegalArgumentException();
-		}
-		for (int row = 0; row < this.getRows(); row++) {
-			for (int col = 0; col < this.getColumns(); col++) {
-				
 			}
 		}
 	}
@@ -124,16 +111,13 @@ public class Matrix {
 		for (int i = 0; i < this.getColumns(); i++) {
 			for (int j = 0; j < other.getColumns(); j++) {
 				int sum = 0;
-
 				for (int k = 0; k < this.getColumns(); k++) {
-					int o = matrix[i][k];
-					int o2 = other.matrix[k][j];
-					sum += o * o2;
+					sum += matrix[i][k] * other.matrix[k][j];
 				}
 				product.matrix[i][j] = sum;
 			}
 		}
-		System.out.println(product.toString());
+
 		return product;
 	}
 	

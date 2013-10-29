@@ -37,10 +37,14 @@ public class MatrixCalculator {
 				selected.fillMatrix();
 			} else if (request.equals("add")) {
 				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
-				selected.add(matrices.get(console.nextInt() - 1));
+				Matrix sum = selected.add(matrices.get(console.nextInt() - 1));
+				matrices.add(sum);
+				System.out.println(sum.toString());
 			} else if (request.equals("multiply")) {
 				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
-				selected.multiply(matrices.get(console.nextInt() - 1));
+				Matrix product = selected.multiply(matrices.get(console.nextInt() - 1));
+				matrices.add(product);
+				System.out.println(product.toString());
 			} else if (request.equals("pow")) {
 				System.out.print("By what power? ");
 				selected.power(console.nextInt(), selected);
