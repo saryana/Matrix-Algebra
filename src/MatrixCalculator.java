@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Scanner;
  */
 public class MatrixCalculator {
 
-	public static Matrix[] matrices;
+	public static List<Matrix> matrices;
 	
 	public static void main(String[] args) {
 		Scanner console = new Scanner(System.in);
@@ -16,12 +17,14 @@ public class MatrixCalculator {
 		
 		System.out.print("How many matracies do you want? ");
 		int count = console.nextInt();
-		matrices = new Matrix[count];
+		matrices = new ArrayList<Matrix>();
 		
 		for (int i = 0; i < count; i++) {
 			System.out.print("Dimensions for matrix " + (i + 1) + "? (space seperated) ");
-			matrices[i] = new Matrix(console.nextInt(), console.nextInt());
-			matrices[i].fillMatrix();
+			int rows =  console.nextInt();
+			int cols = console.nextInt();
+			matrices.add(new Matrix(rows, cols));
+			matrices.get(i).fillMatrix();
 		}
 		selectMatrix(console);
 		
@@ -34,10 +37,10 @@ public class MatrixCalculator {
 				selected.fillMatrix();
 			} else if (request.equals("add")) {
 				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
-				selected.add(matrices[console.nextInt() - 1]);
+				selected.add(matrices.get(console.nextInt() - 1));
 			} else if (request.equals("multiply")) {
 				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
-				selected.multiply(matrices[console.nextInt() - 1]);
+				selected.multiply(matrices.get(console.nextInt() - 1));
 			} else if (request.equals("pow")) {
 				System.out.print("By what power? ");
 				selected.power(console.nextInt(), selected);
@@ -71,18 +74,18 @@ public class MatrixCalculator {
 		printAll();
 		System.out.print("Which Matrix should be selected? (enter number) ");
 		int selection = console.nextInt();
-		for (int i = 0; i < matrices.length; i++) {
-			matrices[i].setSelected(false);
+		for (Matrix matrix : matrices) {
+			matrix.setSelected(false);
 		}
-		matrices[selection-1].setSelected(true);
+		matrices.get(selection - 1).setSelected(true);
 	}
 
 	/**
 	 * Prints all the matrices
 	 */
 	private static void printAll() {
-		for (Matrix m : matrices) {
-			System.out.println(m.toString());
+		for (Matrix matrix : matrices) {
+			System.out.println(matrix.toString());
 		}
 	}
 	
