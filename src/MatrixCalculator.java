@@ -36,19 +36,28 @@ public class MatrixCalculator {
 			if (request.equals("fill")) {
 				selected.fillMatrix();
 			} else if (request.equals("add")) {
-				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
+				System.out.print("Dimensions for matrix? (space seperated) ");
+				int rows = console.nextInt();
+				int cols = console.nextInt();
+				Matrix newMatrix = new Matrix(rows, cols);
+				newMatrix.fillMatrix();
+				matrices.add(newMatrix);
+			} else if (request.equals("addm")) {
+				System.out.print("What matrix do you want to add to the"
+						+ " selected matrix? (e.g. 1, 2) ");
 				Matrix sum = selected.add(matrices.get(console.nextInt() - 1));
 				matrices.add(sum);
 				System.out.println(sum.toString());
 			} else if (request.equals("multiply")) {
-				System.out.print("What matrix do you want to add to the selected matrix? (e.g. 1, 2) ");
+				System.out.print("What matrix do you want to add to the"
+						+ " selected matrix? (e.g. 1, 2) ");
 				Matrix product = selected.multiply(matrices.get(console.nextInt() - 1));
 				matrices.add(product);
 				System.out.println(product.toString());
-			} else if (request.equals("pow")) {
+			} else if (request.equals("power")) {
 				System.out.print("By what power? ");
 				selected.power(console.nextInt(), selected);
-			} else if (request.equals("sm")) {
+			} else if (request.equals("scalar")) {
 				System.out.print("By what scalar? ");
 				selected.scalarMultiplcation(console.nextInt());
 			} else if (request.equals("trans")) {
@@ -57,13 +66,14 @@ public class MatrixCalculator {
 				System.out.println(selected.getRows());
 			} else if (request.equals("cols")) {
 				System.out.println(selected.getColumns());
-			} else if (request.equals("cs")) {
+			} else if (request.equals("change")) {
 				selectMatrix(console);
 				selected = getSelectedMatrix();
-			} else if (request.equals("printa")) {
-				printAll();
 			} else if (request.equals("print")) {
 				System.out.println(selected.toString());
+
+			} else if (request.equals("printa")) {
+				printAll();
 			}
 			System.out.println();
 			printCommands(commands);
@@ -88,8 +98,9 @@ public class MatrixCalculator {
 	 * Prints all the matrices
 	 */
 	private static void printAll() {
-		for (Matrix matrix : matrices) {
-			System.out.println(matrix.toString());
+		for (int i = 0; i < matrices.size(); i++) {
+			System.out.print("Matrix " + (i + 1) + ": ");
+			System.out.println(matrices.get(i).toString());
 		}
 	}
 	
@@ -100,17 +111,18 @@ public class MatrixCalculator {
 	private static ArrayList<String> getCommands() {
 		ArrayList<String> commands = new ArrayList<String>();
 		commands.add("Q: Quit");
-		commands.add("FILL: Fill Matrix");
-		commands.add("ADD: Add Matrix");
-		commands.add("MULTIPLY: Multiply a matrix");
-		commands.add("POW: Raises matrix to certain power");
-		commands.add("SM: Scalar Multiply");
-		commands.add("TRAN: Transposes");
+		commands.add("FILL: Changes content of matrix");
+		commands.add("ADD: Adds a matrix to the list");
+		commands.add("ADDM: Adds two matrices and stores it");
+		commands.add("MULTIPLY: Multiplies two matrices and stores it");
+		commands.add("POWER: Raises matrix to certain power and replaces it");
+		commands.add("SCALAR: Multiples a matrix by a scalar and replaces it");
+		commands.add("TRANS: Transposes a matrix and replaces it");
 		commands.add("ROWS: Get Rows");
 		commands.add("COLS: Get Columns");
-		commands.add("CS: Change Selected");
-		commands.add("PRINT: Print Matrix");
-		commands.add("PRINTA: Print All Matrices");
+		commands.add("CHANGE: Change selected matrix");
+		commands.add("PRINT: Prints selected matrix");
+		commands.add("PRINTA: Prints all matrices");
 		commands.add("What would you like to do? ");
 		return commands;
 	}
