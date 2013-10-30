@@ -59,9 +59,15 @@ public class MatrixCalculator {
 				selected.power(console.nextInt(), selected);
 			} else if (request.equals("scalar")) {
 				System.out.print("By what scalar? ");
-				selected.scalarMultiplcation(console.nextInt());
+				selected.scalarMultiplcation(console.nextDouble());
 			} else if (request.equals("trans")) {
 				selected.transpose();
+			} else if (request.equals("inverse")) {
+				Matrix inverse = selected.inverse();
+				System.out.println(inverse);
+				matrices.add(inverse);
+			} else if (request.equals("det")) {
+				System.out.println("1/" + selected.determinant());
 			} else if (request.equals("rows")) {
 				System.out.println(selected.getRows());
 			} else if (request.equals("cols")) {
@@ -78,6 +84,7 @@ public class MatrixCalculator {
 			System.out.println();
 			printCommands(commands);
 			request = console.next();
+			System.out.println();
 		}
 	}
 	
@@ -118,6 +125,8 @@ public class MatrixCalculator {
 		commands.add("POWER: Raises matrix to certain power and replaces it");
 		commands.add("SCALAR: Multiples a matrix by a scalar and replaces it");
 		commands.add("TRANS: Transposes a matrix and replaces it");
+		commands.add("INVERSE: Finds inverse of (2x2) matrix");
+		commands.add("DET: Finds determinant of (2x2) matrix");
 		commands.add("ROWS: Get Rows");
 		commands.add("COLS: Get Columns");
 		commands.add("CHANGE: Change selected matrix");

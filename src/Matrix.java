@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -6,7 +7,7 @@ import java.util.Scanner;
  */
 public class Matrix {
 
-	private int[][] matrix;
+	private double[][] matrix;
 	private boolean selected;
 	
 	/**
@@ -17,7 +18,7 @@ public class Matrix {
 	 */
 	public Matrix(int rows, int columns) {
 		if (rows == 0 || columns == 0) throw new IllegalArgumentException();
-		matrix = new int[rows][columns];
+		matrix = new double[rows][columns];
 		selected = false;
 	}
 	
@@ -60,7 +61,7 @@ public class Matrix {
 			String[] numbers = line.split(" ");
 			if (numbers.length !=  this.getColumns()) throw new IllegalArgumentException();
 			for (int col = 0; col < this.getColumns(); col++) {
-				matrix[row][col] = Integer.parseInt(numbers[col]);
+				matrix[row][col] = Double.parseDouble(numbers[col]);
 			}
 		}
 	}
@@ -89,7 +90,7 @@ public class Matrix {
 	 * Multiplies matrix by scalar
 	 * @param scalar - number that the matrix is going to grow by
 	 */
-	public void scalarMultiplcation(int scalar) {
+	public void scalarMultiplcation(double scalar) {
 		for (int row = 0; row < this.getRows(); row++) {
 			for (int col = 0; col < this.getColumns(); col++) {
 				matrix[row][col] *= scalar; 
@@ -148,13 +149,54 @@ public class Matrix {
 	}
 	
 	/**
+	 * Gets the inverse of a 2 x 2 matrix
+	 * @return inverse of matrix
+	 */
+	public Matrix inverse() {
+		double determinant = (double) this.determinant();
+		Matrix inverse = new Matrix(getRows(), getColumns());
+		inverse.matrix[0][0] = matrix[1][1];
+		inverse.matrix[1][1] = matrix[0][0];
+		inverse.matrix[0][1] = matrix[1][0]*-1;
+		inverse.matrix[1][0] = matrix[0][1]*-1;
+		inverse.scalarMultiplcation(1.0/determinant);
+		return inverse;
+	}
+	
+	/**
+	 * Finds the determinant of only a 2 x 2 matrix,
+	 * does not handle a matrix with determinant of 0
+	 * @throws IllegalStateException if the matrix is not 2 x 2
+	 * @return determinant of 2 x 2 matrix
+	 */
+	public int determinant() {
+		if (this.getRows() != this.getColumns() || this.getRows() != 2) {
+			throw new IllegalStateException();
+		}
+		
+		int diagnol = 1;
+		int nonDiagnol = 1;
+		
+		for (int row = 0; row < this.getRows(); row++) {
+			for (int col = 0; col < this.getColumns(); col++) {
+				if (row == col) {
+					diagnol *= matrix[row][col];
+				} else {
+					nonDiagnol *= matrix[row][col];
+				}
+			}
+		}
+		return diagnol - nonDiagnol;
+	}
+	
+	/**
 	 * @return - grids printed values
 	 */
 	public String toString() {
 		String matrixString = "\n[\n";
 		for (int row = 0; row < matrix.length; row++) {
 			for (int col = 0; col < matrix[row].length; col++) {
-				int num = matrix[row][col];
+				double num = matrix[row][col];
 				matrixString += num + " ";
 				if (num < 10) matrixString += " ";
 			}
