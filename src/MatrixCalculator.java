@@ -30,8 +30,8 @@ public class MatrixCalculator {
 		
 		printCommands(commands);
 		String request = console.next().toLowerCase();
-		
 		Matrix selected = getSelectedMatrix();
+		
 		while (!request.equals("q")) {
 			if (request.equals("fill")) {
 				selected.fillMatrix();

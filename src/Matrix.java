@@ -55,13 +55,20 @@ public class Matrix {
 	 */
 	public void fillMatrix() {
 		Scanner console = new Scanner(System.in);
-		for (int row = 0; row < this.getRows(); row++) {
-			System.out.print("Numbers in row " + (row + 1) + ": ");
+		System.out.println("Enter all elements:");
+		int j = 0;
+		int rows = getRows();
+		int cols = getColumns();
+		while (j != rows) {
 			String line = console.nextLine();
-			String[] numbers = line.split(" ");
-			if (numbers.length !=  this.getColumns()) throw new IllegalArgumentException();
-			for (int col = 0; col < this.getColumns(); col++) {
-				matrix[row][col] = Double.parseDouble(numbers[col]);
+			String[] lineNums = line.split(" ");
+			if (lineNums.length != cols) {
+				System.out.println("Not correct number of elements. Try again.");
+			} else {
+				for (int i = 0; i < lineNums.length; i++) {
+					matrix[j][i] = Double.parseDouble(lineNums[i]);
+				}
+				j++;
 			}
 		}
 	}
@@ -82,7 +89,6 @@ public class Matrix {
 				sum.matrix[row][col] = matrix[row][col] + otherMatrix.matrix[row][col];
 			}
 		}
-		
 		return sum;
 	}
 	
@@ -108,11 +114,14 @@ public class Matrix {
 			throw new IllegalArgumentException();
 		}
 		Matrix product = new Matrix(this.getRows(), other.getColumns());
-		
-		for (int i = 0; i < this.getColumns(); i++) {
-			for (int j = 0; j < other.getColumns(); j++) {
-				int sum = 0;
-				for (int k = 0; k < this.getColumns(); k++) {
+		int rows = this.getRows();
+		int cols = this.getColumns();
+		int oRows = other.getRows();
+		int oCols = other.getColumns();
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < oCols; j++) {
+				double sum = 0;
+				for (int k = 0; k < cols; k++) {
 					sum += matrix[i][k] * other.matrix[k][j];
 				}
 				product.matrix[i][j] = sum;
@@ -193,17 +202,17 @@ public class Matrix {
 	 * @return - grids printed values
 	 */
 	public String toString() {
-		String matrixString = "\n[\n";
+		String matrixString = "\n{\n";
 		for (int row = 0; row < matrix.length; row++) {
+			matrixString += "\n{  ";
 			for (int col = 0; col < matrix[row].length; col++) {
 				double num = matrix[row][col];
 				matrixString += num + " ";
 				if (num < 10) matrixString += " ";
 			}
-			matrixString += "\n";
+			matrixString += "}";
 		}
-		matrixString += "\t]";
+		matrixString += "\n\t}";
 		return matrixString;
 	}
-	
 }
